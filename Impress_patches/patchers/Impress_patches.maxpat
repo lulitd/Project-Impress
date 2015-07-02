@@ -7,7 +7,7 @@
 			"revision" : 8
 		}
 ,
-		"rect" : [ 556.0, 70.0, 768.0, 927.0 ],
+		"rect" : [ 0.0, 61.0, 1920.0, 945.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 0,
 		"default_fontsize" : 12.0,
@@ -37,7 +37,7 @@
 					"numoutlets" : 0,
 					"patching_rect" : [ 1223.0, 837.0, 150.0, 20.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 515.0, 801.0, 150.0, 20.0 ],
+					"presentation_rect" : [ 1065.0, 756.0, 150.0, 20.0 ],
 					"text" : "Here is your selfie!"
 				}
 
@@ -51,7 +51,7 @@
 					"outlettype" : [ "", "" ],
 					"patching_rect" : [ 938.0, 939.0, 326.0, 242.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 458.0, 315.459564, 635.834717, 470.540436 ]
+					"presentation_rect" : [ 1008.0, 270.459564, 635.834717, 470.540436 ]
 				}
 
 			}
@@ -77,7 +77,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "bang" ],
 					"patching_rect" : [ 938.0, 739.0, 63.0, 20.0 ],
-					"text" : "delay 500"
+					"text" : "delay 100"
 				}
 
 			}
@@ -165,7 +165,7 @@
 							"revision" : 8
 						}
 ,
-						"rect" : [ 1538.0, 368.0, 1079.0, 826.0 ],
+						"rect" : [ 832.0, 368.0, 1079.0, 826.0 ],
 						"bglocked" : 0,
 						"openinpresentation" : 0,
 						"default_fontsize" : 12.0,
@@ -455,7 +455,7 @@
 									"numoutlets" : 1,
 									"outlettype" : [ "" ],
 									"patching_rect" : [ 50.0, 351.0, 131.0, 32.0 ],
-									"text" : "7_1_2015_23_0_48_comp0"
+									"text" : "7_1_2015_23_20_21_comp0"
 								}
 
 							}
@@ -844,7 +844,7 @@
 							"revision" : 8
 						}
 ,
-						"rect" : [ 25.0, 69.0, 640.0, 480.0 ],
+						"rect" : [ 25.0, 70.0, 640.0, 480.0 ],
 						"bglocked" : 0,
 						"openinpresentation" : 0,
 						"default_fontsize" : 12.0,
@@ -1071,7 +1071,7 @@
 							"revision" : 8
 						}
 ,
-						"rect" : [ 1159.0, 219.0, 955.0, 1020.0 ],
+						"rect" : [ 956.0, 219.0, 955.0, 1020.0 ],
 						"bglocked" : 0,
 						"openinpresentation" : 0,
 						"default_fontsize" : 12.0,
@@ -1090,6 +1090,7 @@
 						"description" : "",
 						"digest" : "",
 						"tags" : "",
+						"visible" : 1,
 						"boxes" : [ 							{
 								"box" : 								{
 									"comment" : "MOUTH OUTPUT",
@@ -1184,7 +1185,7 @@
 											"revision" : 8
 										}
 ,
-										"rect" : [ 1431.0, 267.0, 914.0, 969.0 ],
+										"rect" : [ 997.0, 267.0, 914.0, 969.0 ],
 										"bglocked" : 0,
 										"openinpresentation" : 0,
 										"default_fontsize" : 12.0,
@@ -2121,7 +2122,7 @@
 											"revision" : 8
 										}
 ,
-										"rect" : [ 863.0, 253.0, 1697.0, 1016.0 ],
+										"rect" : [ 9.0, 70.0, 1530.0, 925.0 ],
 										"bglocked" : 0,
 										"openinpresentation" : 0,
 										"default_fontsize" : 12.0,
@@ -3157,7 +3158,7 @@
 											"revision" : 8
 										}
 ,
-										"rect" : [ 1430.0, 317.0, 914.0, 639.0 ],
+										"rect" : [ 997.0, 317.0, 914.0, 639.0 ],
 										"bglocked" : 0,
 										"openinpresentation" : 0,
 										"default_fontsize" : 12.0,
@@ -4094,7 +4095,7 @@
 											"revision" : 8
 										}
 ,
-										"rect" : [ 1420.0, 459.0, 970.0, 655.0 ],
+										"rect" : [ 822.0, 260.0, 970.0, 655.0 ],
 										"bglocked" : 0,
 										"openinpresentation" : 0,
 										"default_fontsize" : 12.0,
@@ -4113,6 +4114,7 @@
 										"description" : "",
 										"digest" : "",
 										"tags" : "",
+										"visible" : 1,
 										"boxes" : [ 											{
 												"box" : 												{
 													"fontname" : "Arial",
@@ -12396,11 +12398,12 @@
 									"fontsize" : 16.334532,
 									"frgb" : 0.0,
 									"id" : "obj-44",
+									"linecount" : 3,
 									"maxclass" : "comment",
 									"numinlets" : 1,
 									"numoutlets" : 0,
-									"patching_rect" : [ 663.0, 82.666664, 233.0, 25.0 ],
-									"text" : "Find and track eyes."
+									"patching_rect" : [ 545.0, 521.0, 233.0, 63.0 ],
+									"text" : "Find facial features based on Jean-Marc's eye tracking patch"
 								}
 
 							}
@@ -12792,7 +12795,7 @@
 					"parameter_enable" : 0,
 					"patching_rect" : [ 188.0, 534.0, 236.078125, 63.40625 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 1546.9552, 938.0, 236.078125, 63.40625 ],
+					"presentation_rect" : [ 519.650269, 880.0, 236.078125, 63.40625 ],
 					"spacing_x" : 10.0,
 					"spacing_y" : 25.0,
 					"text" : "Click me to take a selfie! (or spacebar)",
@@ -12827,7 +12830,7 @@
 					"numoutlets" : 0,
 					"patching_rect" : [ 437.0, 544.0, 150.0, 20.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 1598.949463, 813.0, 150.0, 20.0 ],
+					"presentation_rect" : [ 571.644531, 755.0, 150.0, 20.0 ],
 					"text" : "Camera Filter (1-5)"
 				}
 
@@ -12849,7 +12852,7 @@
 					"numoutlets" : 0,
 					"patching_rect" : [ 1459.0, 18.0, 326.0, 176.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 119.0, 53.0, 1151.988525, 121.0 ],
+					"presentation_rect" : [ 458.0, 94.0, 555.988525, 121.0 ],
 					"text" : "Time to take a selfie"
 				}
 
@@ -14232,7 +14235,7 @@
 					"outlettype" : [ "", "" ],
 					"patching_rect" : [ 255.75, 933.0, 341.0, 257.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 1179.144531, 315.459564, 635.609863, 470.540436 ]
+					"presentation_rect" : [ 305.144531, 270.459564, 635.609863, 470.540436 ]
 				}
 
 			}
@@ -14270,7 +14273,7 @@
 					"outlettype" : [ "preset", "int", "preset", "int" ],
 					"patching_rect" : [ 437.0, 469.0, 275.0, 62.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 1536.449463, 840.0, 275.0, 66.0 ],
+					"presentation_rect" : [ 509.144531, 782.0, 275.0, 66.0 ],
 					"preset_data" : [ 						{
 							"number" : 1,
 							"data" : [ 5, "obj-92", "toggle", "int", 1, 5, "obj-91", "flonum", "float", 0.5, 5, "<invalid>", "toggle", "int", 1, 5, "obj-38", "number", "int", 2 ]
