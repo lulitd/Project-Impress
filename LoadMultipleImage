@@ -1,0 +1,836 @@
+/**
+ * Continuously Load and Display 
+ * 
+ * 
+ * 
+ */
+import java.awt.Rectangle;
+
+
+//1366 768
+
+float imageW = 192/2; 
+float imageH = 144/2;
+
+float screenWidth;
+float screenHeight;
+int initialNumber=6;
+int maxImageNum;
+int maxX;
+int maxY;
+
+gridUnit[] grid;
+
+int n;
+int loop;
+
+String seyeL = "eyeL_";
+String seyeR = "eyeR_";
+String snose = "nose_";
+String smouth = "mouth_";
+
+ArrayList<PImage> EyeL = new ArrayList<PImage>();
+ArrayList<PImage> EyeR = new ArrayList<PImage>();
+ArrayList<PImage> Nose = new ArrayList<PImage>();
+ArrayList<PImage> Mouth = new ArrayList<PImage>();
+
+ArrayList<Rectangle> rectGrid;
+
+PImage[] images;
+int lastTime = 0;
+int nTime =0;
+
+select mousePos;
+boolean isSelected;
+int whichOne;
+int previousOne;
+Rectangle rectThis;
+Rectangle rectPrevious;
+PGraphics pg;
+
+int ini;
+int sel;
+
+boolean eyeLhasImage;
+boolean eyeRhasImage;
+boolean nosehasImage;
+boolean mouthhasImage;
+boolean different;
+
+int countersave;
+
+void setup() {
+  
+  
+  screenWidth = 1920;
+  screenHeight = 1080;
+  
+  maxX = int(floor(screenWidth/imageW));
+  maxY = int(floor(screenHeight/imageH));
+  maxImageNum = maxX * maxY - 1;
+  //Set background colour
+  background(51);
+  images = new PImage[maxImageNum+1];
+  
+  size(int(screenWidth), int(screenHeight));
+  
+  n = 0;
+  loop = 0;
+  
+  for(int i=0; i<6; i++){
+    EyeL.add(loadImage(seyeL + str(i) + ".jpg"));
+    EyeR.add(loadImage(seyeR + str(i) + ".jpg")); 
+    Nose.add(loadImage(snose + str(i) + ".jpg")); 
+    Mouth.add(loadImage(smouth + str(i) + ".jpg"));  
+  }
+  //Build the grid (fixed grid)
+  grid = buildGrid(maxX, maxY, maxImageNum+1, imageW, imageH);
+  rectGrid = new ArrayList<Rectangle>();
+  for(int i = 0; i < grid.length; i++)
+  {
+   noFill();
+   noStroke(); 
+   Rectangle rect = new Rectangle(int(grid[i].getCorX()), int(grid[i].getCorY()), int(grid[i].getW()), int(grid[i].getH()));
+   rectGrid.add(rect);
+   
+  }
+  ini = 0;
+  mousePos = new select();
+  isSelected = false;
+  whichOne = 0;
+  sel = 0;
+  countersave = 0;
+}
+
+
+void draw() { 
+
+      
+
+       
+  if(millis() - nTime > 3000 ){
+  
+        
+   for(int i = 0; i < grid.length; i++)
+  {
+    mousePos = new select(grid[i]);
+    if(mousePos.isSelect(mouseX, mouseY)){
+      whichOne = i;
+    }
+  } 
+     println(" ==============================!!!!!!!!whichOne!!!!!!!!=====================" + whichOne);
+    
+        noFill();
+        stroke(13);
+        strokeWeight(8);
+        rectThis = rectGrid.get(whichOne);
+        //size(imageW, imageH);
+        //pg = createGraphics(rectThis.x, rectThis.y);
+        
+       // rect(rectGrid.get(whichOne).x, rectGrid.get(whichOne).y, rectGrid.get(whichOne).width, rectGrid.get(whichOne).height);
+    
+   
+         
+         previousOne = whichOne;
+        
+        noFill();
+        stroke(255);
+      
+        strokeWeight(8);
+        rectThis = rectGrid.get(previousOne);
+        rect(rectGrid.get(previousOne).x, rectGrid.get(previousOne).y, rectGrid.get(previousOne).width, rectGrid.get(previousOne).height);
+        
+        rectPrevious = rectThis;
+        
+    nTime = millis();
+        
+     
+           
+           println("========================!!!===================" + grid[whichOne].getID());   
+           sel = grid[whichOne].getID();
+       
+        
+        switch(sel){
+          case 0:
+            image(grid[whichOne].getImage(), grid[53].getCorX(), grid[53].getCorY(), imageW, imageH);
+            eyeLhasImage = true;
+            if(grid[previousOne].getImage()!= grid[whichOne].getImage()){
+              different = true;
+            }
+            else{
+             different = false;
+            }
+            break;
+          case 1:
+            image(grid[whichOne].getImage(), grid[73].getCorX(), grid[73].getCorY(), imageW, imageH);
+            eyeRhasImage = true;
+             if(grid[previousOne].getImage()!= grid[whichOne].getImage()){
+              different = true;
+            }
+            else{
+             different = false;
+            }
+            break;
+          case 2:
+            image(grid[whichOne].getImage(), grid[64].getCorX(), grid[64].getCorY(), imageW, imageH);
+            nosehasImage = true;
+             if(grid[previousOne].getImage()!= grid[whichOne].getImage()){
+              different = true;
+             }
+            else{
+             different = false;
+            }
+            break;
+          case 3:
+            image(grid[whichOne].getImage(), grid[65].getCorX(), grid[65].getCorY(), imageW, imageH);
+            mouthhasImage = true;
+             if(grid[previousOne].getImage()!= grid[whichOne].getImage()){
+              different = true;
+             }
+            else{
+             different = false;
+            }
+            break;
+        }
+        
+        if(mouthhasImage == true && nosehasImage == true && eyeRhasImage == true && eyeLhasImage == true )
+        {
+         saveFrame("/output/" + "Save" + countersave + ".jpg"); 
+         countersave += 1;
+        }
+        
+    
+   }   
+   
+   
+       
+       
+       
+       
+//======================================================================================================================
+   //timer upddates every 3 seconds 
+   if(millis() - lastTime > 100){
+   //update everything
+    
+    
+    PImage iDraw = null;
+    int whichPart = n % 4;
+  
+    int currentSize = EyeL.size();
+    
+    switch(whichPart) {
+     case 0:
+       int drawi = int(random(currentSize));
+       iDraw = EyeL.get(drawi);
+       grid[n].setImage(iDraw);
+       grid[n].setID(0);
+       images[n] = iDraw;
+         println("0 eyeL    " + n);
+       break;
+     case 1:
+       iDraw = EyeR.get(int(random(currentSize)));
+       grid[n].setImage(iDraw);
+       images[n] = iDraw;
+       grid[n].setID(1);
+       println("1 eyeR    " + n);       
+       break;
+     case 2:
+       iDraw = Nose.get(int(random(currentSize)));
+       grid[n].setImage(iDraw);
+       images[n] = iDraw;
+       grid[n].setID(2);
+         println("2 nose    " + n);
+       break;
+     case 3:
+       iDraw = Mouth.get(int(random(currentSize)));
+       grid[n].setImage(iDraw);
+       images[n] = iDraw;
+       grid[n].setID(3);
+         println("3 mouth   " + n);
+       break;
+    }
+    
+    
+    
+    gridUnit thisUnit= grid[n];
+    float corX = thisUnit.getCorX();
+    float corY = thisUnit.getCorY();
+    
+    
+    if( n >= maxY * 4 && n < maxY *10) {
+      
+     println ("blank at " + "( " + corX + " , " + corY + " )");
+    }
+     
+    else if (n < 40 || n >= 100) {
+    image(iDraw, corX, corY, imageW, imageH); 
+    println ("drawn at " + "( " + corX + " , " + corY + " )");
+    }
+   
+    
+    if(n == maxImageNum){
+      println("=======================fullLoop============================");
+      n = 0;
+    }
+    
+    if(n > 3){
+    println("this grid " + grid[n].hasImage() + " ID " + grid[n].getID());
+     println("last grid " + grid[n-1].hasImage()+ " ID " + grid[n-1].getID());
+      println("last two grid " + grid[n-2].hasImage()+ " ID " + grid[n-2].getID());
+    }
+    
+    n++;
+  
+    for(int i = 0 ; i < grid.length && grid[i].hasImage() && i < 40 && i >= 100; i++)
+    {
+       image(grid[i].getImage(), grid[i].getCorX(), grid[i].getCorY(), grid[i].getW(), grid[i].getH());
+    }
+   
+   EyeL = updateImporting(EyeL, seyeL);
+   println(EyeL.size());
+   EyeR = updateImporting(EyeR, seyeR);
+   println(EyeR.size());
+   Nose = updateImporting(Nose, snose);
+   println(Nose.size());
+   Mouth = updateImporting(Mouth, smouth);
+   println(Mouth.size());
+     
+    println(" ");
+     
+//  if(rectGrid.get(0).contains(mouseX, mouseY)){
+//    noFill();
+//      stroke(13);
+//      strokeWeight(8);
+//      rect(rectGrid.get(0).x, rectGrid.get(0).y, rectGrid.get(0).width, rectGrid.get(0).height);
+//  }
+//    if(rectGrid.get(1).contains(mouseX, mouseY)){
+//    noFill();
+//      stroke(13);
+//      strokeWeight(8);
+//      rect(rectGrid.get(1).x, rectGrid.get(1).y, rectGrid.get(1).width, rectGrid.get(1).height);
+//  }
+// if(rectGrid.get(2).contains(mouseX, mouseY)){
+//    noFill();
+//      stroke(13);
+//      strokeWeight(8);
+//      rect(rectGrid.get(2).x, rectGrid.get(2).y, rectGrid.get(2).width, rectGrid.get(2).height);
+//  }
+  
+       
+    
+      
+      
+    //resetting timer
+      lastTime = millis();
+      
+       
+    }
+    
+      
+        
+       
+      //grid[whichOne].select(false);
+//==================================out of loop================================
+
+
+//  for(int i=0; i < rectGrid.size(); i++){
+//    if(rectGrid.get(i).contains(mouseX,mouseY)){
+//      noFill();
+//      stroke(13);
+//      strokeWeight(8);
+//      rect(rectGrid.get(i).x, rectGrid.get(i).y, rectGrid.get(i).width, rectGrid.get(i).height);
+//      break;
+//        
+//    } else{
+//       noFill();
+//       noStroke();
+//       //strokeWeight(8);
+//       rect(rectGrid.get(i).x, rectGrid.get(i).y, rectGrid.get(i).width, rectGrid.get(i).height);
+//       //break;
+//    }
+//    
+
+   
+
+//  }
+ 
+  
+//  if(grid[0].
+  
+ 
+ 
+}
+
+
+
+
+//======================================================================Build the Grid===============================================================
+
+gridUnit[] buildGrid(int maxX, int maxY, int max, float iw, float ih){
+  gridUnit[] grid = new gridUnit[max];
+  for(int n=0; n<max; n++){
+   gridUnit thisCell = new gridUnit(int(floor(n/maxY)*iw), (int(n % maxY)) * ih, iw, ih, n);
+   grid[n] = thisCell;    
+  }
+  return grid;
+}
+
+
+
+//===================================================================Update Importing================================================================
+ArrayList<PImage> updateImporting(ArrayList<PImage> currentList, String stringi){
+  
+  ArrayList<PImage> updatedList = new ArrayList<PImage>();
+  for(int i = 0; i < currentList.size() && currentList.get(i) != null; i++){
+   
+    updatedList.add(currentList.get(i));
+   
+  }
+  
+  for(int i = currentList.size(); i < (currentList.size() + 6) && loadImage(stringi + str(i) + ".jpg") != null; i++){
+    updatedList.add(loadImage(stringi + str(i) + ".jpg"));
+   
+  }
+  
+  return updatedList;
+}
+
+
+
+
+
+//======================================================================CLASSES======================================================================
+public class gridUnit {
+ float corX;
+ float corY;
+ float unitW;
+ float unitH;
+ int id;
+ boolean selected;
+ PImage image;
+ 
+ public gridUnit() {
+ }
+ 
+  
+ public gridUnit(float corX, float corY, float unitW, float unitH, int id){
+  this.corX = corX;
+  this.corY = corY;
+  this.unitW = unitW;
+  this.unitH = unitH; 
+  this.selected = false;
+  this.id = id;
+ }
+ 
+  public gridUnit(float corX, float corY, float unitW, float unitH, int id, PImage newImage){
+  this.corX = corX;
+  this.corY = corY;
+  this.unitW = unitW;
+  this.unitH = unitH; 
+  this.selected = false;
+  this.image = newImage;
+  this.id = id;
+ }
+  
+ float getCorX(){
+  return corX; 
+ }
+ 
+ float getCorY(){
+   return corY;
+ }
+ 
+ float getOppoX(){
+   return corX+unitW;
+ }
+ 
+ float getOppoY(){
+   return corY+unitH;
+ }
+ 
+ float getW(){
+   return unitW;
+ }
+ 
+ float getH(){
+   return unitH;
+ }
+  
+ float getArea(){
+   return unitW*unitH;
+ }
+
+ void select(boolean tof){
+   if(tof)
+     this.selected = true; 
+   else
+     this.selected = false;
+ }
+
+ boolean isSelected(){
+   return selected;
+ }
+
+ boolean hasImage(){
+  if(image == null)
+   return false;
+  else
+   return true;
+ }
+ 
+ void setImage(PImage newImage){
+   this.image = newImage;
+ }
+
+ PImage getImage(){
+   return image;
+ }
+ 
+ void setID(int id){
+   this.id = id;
+ }
+ 
+ int getID(){
+   return id;
+ }
+  
+}
+
+//=================================================================CLASS SELECT============================================================
+class select{
+  boolean rollover = false;
+  boolean dragging =false;
+  float x, y, w, h;
+  float offsetX, offsetY;
+  gridUnit thisCell;
+  
+  select(){
+  }
+  
+  
+  select(gridUnit thisCell){
+  
+   this.thisCell = thisCell;
+   this.x = thisCell.getCorX();
+   this.y = thisCell.getCorY();
+   
+   this.w = thisCell.getW();
+   this.h = thisCell.getH();
+   offsetX = 0;
+   offsetY = 0;
+  }
+  
+  boolean isSelect(int mx, int my){
+   
+    if (mx > x && mx < x + w && my > y && my < y + h) {
+      rollover = true;
+      dragging = true;
+      println("III AMMMMM SELECTEEEEEDDDDDD");
+    } else {
+      rollover = false;
+      dragging = false;
+    }
+    return rollover;
+  }
+//  
+//  boolean rollover(int mx, int my){
+//     if (mx > x && mx < x + w && my > y && my < y + h) {
+//      rollover = true;
+//      dragging = true;
+//      println("III AMMMMM SELECTEEEEEDDDDDD");
+//    } else {
+//      rollover = false;
+//      dragging = false;
+//    }
+//    return rollover;
+//  }
+  
+  
+  
+  
+  
+  
+  
+  
+}
+
+
+//================================================================CLASS DES AREA===========================================================
+abstract class desArea{
+ float corX;
+ float corY;
+ float areaW;
+ float areaH;
+ 
+ abstract public float getCorX();
+ abstract public float getCorY();
+ abstract public float getW();
+ abstract public float getH();
+  
+}
+
+class desEyeL extends desArea{
+  
+  void desEyeL(){
+  }
+  //unitW and unitH are the original size of the image
+  void desEyeL(float screenW, float screenH, float unitW, float unitH){
+   this.corX = int(screenW/2 - unitW*1.5);
+   this.corY = int(screenH/2 - unitH);
+   this.areaW = unitW;
+   this.areaH = unitH;
+  }
+  
+  float getCorX(){
+    return corX;
+  }
+  
+  float getCorY(){
+    return corY;
+  }
+  
+  float getW(){
+    return areaW;
+  }
+  
+  float getH(){
+    return areaH;
+  }
+}
+
+class desEyeR extends desArea{
+  
+  void desEyeR(){
+  }
+  //unitW and unitH are the original size of the image
+  void desEyeR(float screenW, float screenH, float unitW, float unitH){
+   this.corX = screenW/2 + unitW/2;
+   this.corY = screenH/2 - unitH;
+   this.areaW = unitW;
+   this.areaH = unitH;
+  }
+  
+  float getCorX(){
+    return corX;
+  }
+  
+  float getCorY(){
+    return corY;
+  }
+  
+  float getW(){
+    return areaW;
+  }
+  
+  float getH(){
+    return areaH;
+  }
+}
+
+class desNose extends desArea{
+  
+  void desNose(){
+  }
+  //unitW and unitH are the original size of the image
+  void desNose(float screenW, float screenH, float unitW, float unitH){
+   this.corX = screenW/2 - unitW/2;
+   this.corY = screenH/2 - unitH/2;
+   this.areaW = unitW;
+   this.areaH = unitH;
+  }
+  
+  float getCorX(){
+    return corX;
+  }
+  
+  float getCorY(){
+    return corY;
+  }
+  
+  float getW(){
+    return areaW;
+  }
+  
+  float getH(){
+    return areaH;
+  }
+}
+
+class desMouth extends desArea{
+  
+  void desMouth(){
+  }
+  //unitW and unitH are the original size of the image
+  void desMouth(float screenW, float screenH, float unitW, float unitH){
+   this.corX = screenW/2 - unitW/2;
+   this.corY = screenH/2 + unitH/2;
+   this.areaW = unitW;
+   this.areaH = unitH;
+  }
+  
+  float getCorX(){
+    return corX;
+  }
+  
+  float getCorY(){
+    return corY;
+  }
+  
+  float getW(){
+    return areaW;
+  }
+  
+  float getH(){
+    return areaH;
+  }
+}
+
+//=====================================================================CLASS DROP AREA====================================================
+abstract class dropArea{
+ float corX;
+ float corY;
+ float areaW;
+ float areaH;
+ 
+ abstract public float getCorX();
+ abstract public float getCorY();
+ abstract public float getW();
+ abstract public float getH();
+  
+}
+
+class dropEyeL extends dropArea{
+  
+   void dropEyeL(){
+  }
+  //unitW and unitH are the original size of the image
+  void dropEyeL(float screenW, float screenH, float unitW, float unitH){
+   this.corX = screenW/2 - unitW*2.5;
+   this.corY = screenH/2 - unitH*2;
+   this.areaW = unitW*2.5;
+   this.areaH = unitH*2;
+  }
+  
+  float getCorX(){
+    return corX;
+  }
+  
+  float getCorY(){
+    return corY;
+  }
+  
+  float getW(){
+    return areaW;
+  }
+  
+  float getH(){
+    return areaH;
+  }
+}
+
+class dropEyeR extends dropArea{
+  
+   void dropEyeR(){
+  }
+  //unitW and unitH are the original size of the image
+  void dropEyeR(float screenW,float screenH, float unitW, float unitH){
+   this.corX = screenW/2;
+   this.corY = screenH/2 - unitH*2;
+   this.areaW = unitW*2.5;
+   this.areaH = unitH*2;
+  }
+  
+  float getCorX(){
+    return corX;
+  }
+  
+  float getCorY(){
+    return corY;
+  }
+  
+  float getW(){
+    return areaW;
+  }
+  
+  float getH(){
+    return areaH;
+  }
+}
+    
+class dropNose extends dropArea{
+  
+   void dropNose(){
+  }
+  //unitW and unitH are the original size of the image
+  void dropNose(float screenW, float screenH, float unitW, float unitH){
+   this.corX = screenW/2 - unitW*2.5;
+   this.corY = screenH/2 - unitH/2;
+   this.areaW = unitW*5;
+   this.areaH = unitH;
+  }
+  
+  float getCorX(){
+    return corX;
+  }
+  
+  float getCorY(){
+    return corY;
+  }
+  
+  float getW(){
+    return areaW;
+  }
+  
+  float getH(){
+    return areaH;
+  }
+}
+
+class dropMouth extends dropArea{
+  
+   void dropMouth(){
+  }
+  //unitW and unitH are the original size of the image
+  void dropMouth(float screenW, float screenH, float unitW, float unitH){
+   this.corX = screenW/2 - unitW*2.5;
+   this.corY = screenH/2 + unitH/2;
+   this.areaW = unitW*5;
+   this.areaH = unitH*2;
+  }
+  
+  float getCorX(){
+    return corX;
+  }
+  
+  float getCorY(){
+    return corY;
+  }
+  
+  float getW(){
+    return areaW;
+  }
+  
+  float getH(){
+    return areaH;
+  }
+}
+
+//------------------------------------------------------------ MOUSE PRESSED -------------------------------------------------------------------------------//
+void mousePressed() {
+  if(rectGrid.get(0).contains(mouseX, mouseY)){
+    noFill();
+      stroke(13);
+      strokeWeight(8);
+      rect(rectGrid.get(0).x, rectGrid.get(0).y, rectGrid.get(0).width, rectGrid.get(0).height);
+  } else if(rectGrid.get(1).contains(mouseX, mouseY)){
+    noFill();
+      stroke(13);
+      strokeWeight(8);
+      rect(rectGrid.get(1).x, rectGrid.get(1).y, rectGrid.get(1).width, rectGrid.get(1).height);
+  } else if(rectGrid.get(2).contains(mouseX, mouseY)){
+    noFill();
+      stroke(13);
+      strokeWeight(8);
+      rect(rectGrid.get(2).x, rectGrid.get(2).y, rectGrid.get(2).width, rectGrid.get(2).height);
+  }
+}
